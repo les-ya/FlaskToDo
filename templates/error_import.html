@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Ошибка импорта данных</h1>
+<div>
+    {% if current_user.is_authenticated %}
+    Уважаемый, {{ current_user.name }}!
+    Импорт данных возможен только в формате .csv/.txt в следующем виде: <br>
+    <div style="text-align: center;margin: 15px;">
+        <b>Дело 1;0;work<br>Дело 2;0;home<br>Дело 3;1;work<br></b>
+    </div>
+        где 0 - дело не выполнено, 1 - выполнено, work/home - категория. Для теста можно использовать файл, экспортированный сервером.
+    <a href="/" class="btn btn-secondary">Назад</a>
+    {% endif %}
+</div>
+
+{% endblock %}

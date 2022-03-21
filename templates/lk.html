@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+{% if current_user.is_authenticated %}
+
+<div class="stat">
+  <h1>Всего дел: {{all_amount}}</h1>
+  Выполнено: {{done_amount}}<br>
+  Не выполнено: {{note_done_amount}}
+  <h1> {{message}} </h1>
+</div>
+<a href="/" class="btn btn-secondary">Перейти к работе</a>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+{% if current_user.is_authenticated %}
+<h1>ToDo - список дел</h1>
+<div class="categories">
+    {% for category in categories.keys() %}
+        {% if category == current_category %}
+            <div class="current-category">
+                    <a href="/{{ category }}">{{ categories[category] }}</a>
+            </div>
+        {% else: %}
+            <div class="category">
+                    <a href="/{{ category }}">{{ categories[category] }}</a>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% for item in not_done_doings%}
+<div class="one-deal">
+    <div class="not-done">
+        <a href="/doings_done/{{ item.id }}"><img src="/static/img/notdone.png" class="checkbox-img"></a>
+        {{item.content}}
+        <a href="/doings_delete/{{ item.id }}"><img src="/static/img/delete.png" class="delete-img"></a>
+    </div>
+</div>
+{% endfor %}
+{% for item in done_doings%}
+<div class="one-deal">
+    <h2>{{item.title}}</h2>
+    <div class="done">
+        <a href="/doings_done/{{ item.id }}"><img src="/static/img/done.png" class="checkbox-img"></a>
+        {{item.content}}
+        <a href="/doings_delete/{{ item.id }}"><img src="/static/img/delete.png" class="delete-img"></a>
+    </div>
+</div>
+{% endfor %}
+    <a href="add_doings" class="btn btn-secondary">Добавить дело</a>
+    <a href="/download/{{ current_user.id }}" class="btn btn-secondary">Экспортировать в csv</a>
+    <form action="import/{{ current_user.id }}" method="POST" enctype="multipart/form-data" class="upload">
+    Выберите файл для импорта (*.csv): <input type="file" name="myfile">
+    <input type="submit" class="btn btn-secondary" value="Импортировать">
+    </form>
+{% else %}
+<h1>ToDo - список дел</h1>
+<div class="welcome">
+    Добро пожаловать на сервис ToDo!<br>
+    Зарегистрируйтесь или авторизуйтесь для полноценной работы.
+</div>
+{% endif %}
+
+{% endblock %}
